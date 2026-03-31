@@ -1,0 +1,137 @@
+{
+    "home": {
+        "hero": {
+            "title": "GRP & ASSOCIATES LTD",
+            "highlight": "ASSOCIATES",
+            "subtitle": "Pioneering maritime logistics, engineering, and fuel distribution across the archipelago of the Solomon Islands.",
+            "backgroundImage": "/hero_maritime_solomon_islands_1774927638390.png",
+            "establishedText": "Established 1994",
+            "buttons": {
+                "primary": { "label": "Our Fleet", "link": "/services" },
+                "secondary": { "label": "Expertise", "link": "/about" }
+            }
+        },
+        "cta": {
+            "title": "Ready to navigate your next project?",
+            "description": "Based in Honiara and serving the entire archipelago. Let's discuss how GPRSI can support your operations.",
+            "phone": "+677 24567"
+        }
+    },
+    "about": {
+        "title": "A Legacy of Island Resilience",
+        "subtitle": "Trusted since 1994",
+        "description": "GRP & Associates Ltd (GPRSI) is a leading Solomon Islands firm specializing in maritime logistics, civil engineering, and large-scale industrial fuel distribution. For over 30 years, we have been the primary bridge linking the diverse islands of our archipelago, providing the essential infrastructure and supply chains that fuel regional economic growth. From our headquarters in Honiara, we operate a versatile fleet and expert engineering teams capable of executing complex projects in the most remote environments.",
+        "mission": "To provide the Solomon Islands with world-class maritime and engineering solutions that foster connectivity, sustainable development, and economic prosperity for every province. We aim to lead through innovation, reliability, and an unwavering commitment to our local communities.",
+        "stats": {
+            "staff": "120+",
+            "experience": "31+",
+            "vessels": "12",
+            "provinces": "9/9"
+        }
+    },
+    "footer": {
+        "description": "Leading provider of logistical support and specialized services in the Solomon Islands. Dedicated to regional development through maritime and engineering excellence.",
+        "address": "Kukum Highway, Honiara, Solomon Islands",
+        "email": "info@grpsi.com",
+        "phone": "+677 24567",
+        "social": [
+            { "platform": "Globe", "url": "#" },
+            { "platform": "Ship", "url": "#" },
+            { "platform": "Users", "url": "#" }
+        ]
+    },
+    "services": [
+        {
+            "id": "logistics",
+            "title": "Maritime Logistics & Strategic Supply",
+            "description": "The backbone of inter-island trade, providing reliable heavy-lift transport and scheduled cargo services to the most remote corners of the Solomon Islands.",
+            "icon": "Ship",
+            "features": [
+                "Landing Craft Transport (LCT) for heavy plant and machinery",
+                "Bi-weekly scheduled inter-island cargo consolidated shipping",
+                "Point-to-point charter services for government and industrial NGOs",
+                "Regional emergency relief and rapid response coordination",
+                "Specialized handling for high-value and perishable oceanic assets"
+            ],
+            "image": "/gprsi_landing_craft_logistics_mission_1774933381285.png"
+        },
+        {
+            "id": "fuel",
+            "title": "Industrial Fuel & Energy Distribution",
+            "description": "Delivering high-performance energy solutions that drive the engines of industry, power local grids, and keep the Solomon Islands moving.",
+            "icon": "Fuel",
+            "features": [
+                "Industrial-scale bulk diesel and petrol marine bunkering",
+                "High-performance specialized maritime and heavy-duty lubricants",
+                "Remote fuel storage tank design, installation, and refueling",
+                "Stabilized energy supply for regional power authority (SIEA) grids",
+                "Customized fueling solutions for large-scale mining and resource sites"
+            ],
+            "image": "/gprsi_fuel_tanker_supply_remote_island_1774933362908.png"
+        },
+        {
+            "id": "engineering",
+            "title": "Civil Engineering & Infrastructure",
+            "description": "Building the future of our nation through robust engineering, heavy civil construction, and specialized port infrastructure development.",
+            "icon": "HardHat",
+            "features": [
+                "Comprehensive civil engineering, surveying, and project design",
+                "Heavy-duty bridge and regional road network construction",
+                "Port facility expansion and maritime structural reinforcement",
+                "Project management for multi-year infrastructure developments",
+                "Maintenance and rehabilitation of coastal and seismic assets"
+            ],
+            "image": "/gprsi_port_construction_site_malaita_1774933312596.png"
+        }
+    ],
+    "projects": [
+        {
+            "title": "Western Province Strategic Port Expansion",
+            "location": "Gizo, Western Province",
+            "year": "2024",
+            "category": "Engineering",
+            "image": "/gprsi_port_construction_site_malaita_1774933312596.png",
+            "description": "A comprehensive multi-phase project focused on expanding docking capacity and reinforcing the main pier structure in Gizo to support larger cargo vessels."
+        },
+        {
+            "title": "The Eastern Archipelago Supply Loop",
+            "location": "Santa Cruz & Reef Islands",
+            "year": "2024",
+            "category": "Logistics",
+            "image": "/gprsi_landing_craft_logistics_mission_1774933381285.png",
+            "description": "Establishing's GPRSI's flagship monthly supply loop, delivering essential machinery and fuel to the remote communities of the Santa Cruz archipelago."
+        },
+        {
+            "title": "Malaita Power Station Fuel Hub",
+            "location": "Auki, Malaita Province",
+            "year": "2023",
+            "category": "Fuel",
+            "image": "/gprsi_fuel_tanker_supply_remote_island_1774933362908.png",
+            "description": "Construction and technical integration of a 500,000-liter fuel storage facility specifically designed to stabilize the power grid for the province's capital."
+        },
+        {
+            "title": "Quadalcanal Regional Road Network",
+            "location": "Henderson East, Guadalcanal",
+            "year": "2023",
+            "category": "Engineering",
+            "image": "/gprsi_team_operations_image_1774928148738.png",
+            "description": "Civil works involving the rehabilitation of 15km of heavy-use road and the installation of flood-resistant drainage and bridge support systems."
+        },
+        {
+            "title": "Gold Ridge Resource Logistics",
+            "location": "Central Guadalcanal",
+            "year": "2022",
+            "category": "Logistics",
+            "image": "/gprsi_projects_showcase_hero_1774928512898.png",
+            "description": "A dedicated heavy-lift logistics mission involving the transit of industrial excavators and support vehicles to remote mountain resource sites."
+        },
+        {
+            "title": "Shortland Islands Energy Mission",
+            "location": "Shortland Islands",
+            "year": "2024",
+            "category": "Fuel",
+            "image": "/gprsi_landing_craft_logistics_mission_1774933381285.png",
+            "description": "Delivery and setup of portable, modular fuel pods to support the local fishing and transport industry in the westernmost islands of the Solomon Islands."
+        }
+    ]
+}
