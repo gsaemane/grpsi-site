@@ -62,6 +62,7 @@ const writeDB = async (data) => {
 app.use(cors({
     origin: [
         'https://grpsi-site.vercel.app', 
+        'https://grpsi-site.vercel.app/',
         'http://localhost:3000',
         'http://localhost:5000'
     ],
@@ -71,7 +72,7 @@ app.use(cors({
 }));
 
 // Manual Preflight Handle for Vercel Serverless Bypass
-app.options('*', cors());
+app.options('(.*)', cors());
 
 app.use(express.json());
 
@@ -95,13 +96,13 @@ const authenticateToken = (req, res, next) => {
 
 app.post('/api/auth/login', (req, res) => {
     const { password } = req.body;
-    
+
     // For production, this should be against a real db hash
     if (password === (process.env.ADMIN_PASSWORD || 'admin123')) {
         const token = jwt.sign({ user: 'admin' }, JWT_SECRET, { expiresIn: '1h' });
         return res.json({ token });
     }
-    
+
     res.status(401).json({ error: "Invalid credentials" });
 });
 
