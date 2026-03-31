@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import SectionHeading from '@/components/SectionHeading';
-import { Save, RefreshCw, Plus, Trash2, Edit3, Loader2, CheckCircle, AlertCircle, Globe, LayoutDashboard, Briefcase, FileText, Settings, Upload, Image as ImageIcon } from 'lucide-react';
+import { Save, RefreshCw, Plus, Trash2, Edit3, Loader2, CheckCircle, AlertCircle, Globe, LayoutDashboard, Briefcase, FileText, Settings, Upload, Image as ImageIcon, Ship, Users } from 'lucide-react';
 
 export default function AdminPage() {
     const searchParams = useSearchParams();
@@ -610,6 +610,83 @@ export default function AdminPage() {
                             >
                                 {isSaving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
                                 Save Fleet Portfolio
+                            </button>
+                        </div>
+                    </div>
+                )}
+
+                {activeTab === "footer" && (
+                    <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 bg-slate-50/50 p-12 rounded-[2.5rem] border border-slate-100">
+                            <div className="col-span-2 space-y-1">
+                                <label className="text-[10px] uppercase text-slate-400 font-bold ml-1">Company Global Mission</label>
+                                <textarea 
+                                    rows={3}
+                                    className="w-full px-4 py-3 bg-white rounded-xl border border-slate-200 text-sm text-slate-900 font-medium"
+                                    value={content.footer?.description || ''} onChange={(e) => updateDeep(['footer', 'description'], e.target.value)}
+                                />
+                            </div>
+                            
+                            <div className="space-y-1">
+                                <label className="text-[10px] uppercase text-slate-400 font-bold ml-1">Headquarters (Physical)</label>
+                                <input 
+                                    className="w-full px-4 py-3 bg-white rounded-xl border border-slate-200 text-sm font-bold text-slate-900"
+                                    value={content.footer?.address || ''} onChange={(e) => updateDeep(['footer', 'address'], e.target.value)}
+                                />
+                            </div>
+                            
+                            <div className="space-y-1">
+                                <label className="text-[10px] uppercase text-slate-400 font-bold ml-1">Operations Email</label>
+                                <input 
+                                    className="w-full px-4 py-3 bg-white rounded-xl border border-slate-200 text-sm font-bold text-slate-900"
+                                    value={content.footer?.email || ''} onChange={(e) => updateDeep(['footer', 'email'], e.target.value)}
+                                />
+                            </div>
+
+                            <div className="space-y-1">
+                                <label className="text-[10px] uppercase text-slate-400 font-bold ml-1">Central Phone Relay</label>
+                                <input 
+                                    className="w-full px-4 py-3 bg-white rounded-xl border border-slate-200 text-sm font-bold text-slate-900"
+                                    value={content.footer?.phone || ''} onChange={(e) => updateDeep(['footer', 'phone'], e.target.value)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="bg-slate-50/50 p-12 rounded-[2.5rem] border border-slate-100">
+                            <h3 className="text-xl font-bold text-slate-900 mb-8 border-b border-slate-200 pb-4">Social Connectivity</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                {(content.footer?.social || []).map((social: any, i: number) => (
+                                    <div key={i} className="bg-white p-6 rounded-2xl border border-slate-200 space-y-4">
+                                        <div className="flex items-center gap-3 mb-2">
+                                            <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center text-grpsi-gold">
+                                                {social.platform === 'Globe' && <Globe className="w-5 h-5" />}
+                                                {social.platform === 'Ship' && <Ship className="w-5 h-5" />}
+                                                {social.platform === 'Users' && <Users className="w-5 h-5" />}
+                                            </div>
+                                            <span className="font-bold text-slate-900">{social.platform}</span>
+                                        </div>
+                                        <input 
+                                            className="w-full px-3 py-2 bg-slate-50 rounded-lg border border-slate-100 text-xs text-slate-500 font-mono"
+                                            value={social.url} onChange={(e) => {
+                                                const next = [...content.footer.social];
+                                                next[i] = { ...next[i], url: e.target.value };
+                                                updateDeep(['footer', 'social'], next);
+                                            }}
+                                            placeholder="https://..."
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="flex justify-end pt-8 border-t border-slate-100">
+                            <button 
+                                onClick={() => handleSave("footer", content.footer)}
+                                disabled={isSaving}
+                                className="flex items-center gap-3 px-12 py-5 bg-grpsi-blue text-white rounded-full font-bold uppercase tracking-widest hover:bg-grpsi-blue-light transition-all disabled:opacity-50 shadow-premium"
+                            >
+                                {isSaving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
+                                Synchronize Global Settings
                             </button>
                         </div>
                     </div>

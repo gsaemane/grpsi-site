@@ -13,7 +13,7 @@
   --grpsi-white: #F8FAFC;
 }
 
-@theme inline {
+@theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   
