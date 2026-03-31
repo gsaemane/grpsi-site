@@ -71,8 +71,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
 }));
 
-// Manual Preflight Handle for Vercel Serverless Bypass
-app.options('(.*)', cors());
+// CORS is handled globally by app.use(cors(...)) above.
 
 app.use(express.json());
 
