@@ -30,7 +30,10 @@ export default function Services() {
     useEffect(() => {
         const fetchServices = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/services`);
+                const apiBase = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api').replace(/\/$/, '');
+                const url = apiBase.endsWith('/api') ? `${apiBase}/services` : `${apiBase}/api/services`;
+                
+                const res = await fetch(url);
                 const data = await res.json();
                 setServices(data.slice(0, 3)); // Only show top 3 on homepage
             } catch (err) {

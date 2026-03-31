@@ -15,7 +15,10 @@ export default function Home() {
   useEffect(() => {
     const fetchHomeContent = async () => {
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/content`);
+            const apiBase = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api').replace(/\/$/, '');
+            const url = apiBase.endsWith('/api') ? `${apiBase}/content` : `${apiBase}/api/content`;
+
+            const res = await fetch(url);
             const allData = await res.json();
             setData(allData);
         } catch (err) {

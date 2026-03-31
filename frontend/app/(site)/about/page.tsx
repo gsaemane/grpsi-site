@@ -12,7 +12,10 @@ export default function AboutPage() {
     useEffect(() => {
         const fetchAbout = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/about`);
+                const apiBase = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api').replace(/\/$/, '');
+                const url = apiBase.endsWith('/api') ? `${apiBase}/about` : `${apiBase}/api/about`;
+                
+                const res = await fetch(url);
                 const data = await res.json();
                 setContent(data);
             } catch (err) {

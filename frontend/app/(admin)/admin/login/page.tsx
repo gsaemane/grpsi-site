@@ -16,7 +16,10 @@ export default function AdminLoginPage() {
         setError("");
 
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/auth/login`, {
+            const apiBase = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api').replace(/\/$/, '');
+            const loginUrl = apiBase.endsWith('/api') ? `${apiBase}/auth/login` : `${apiBase}/api/auth/login`;
+
+            const res = await fetch(loginUrl, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ password }),

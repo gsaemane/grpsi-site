@@ -16,7 +16,10 @@ export default function ProjectsPage() {
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/projects`);
+                const apiBase = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api').replace(/\/$/, '');
+                const url = apiBase.endsWith('/api') ? `${apiBase}/projects` : `${apiBase}/api/projects`;
+
+                const res = await fetch(url);
                 const data = await res.json();
                 setProjects(data);
             } catch (err) {

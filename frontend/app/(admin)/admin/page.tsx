@@ -27,7 +27,10 @@ export default function AdminPage() {
         setLoading(true);
         setError("");
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/content`);
+            const apiBase = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api').replace(/\/$/, '');
+            const url = apiBase.endsWith('/api') ? `${apiBase}/content` : `${apiBase}/api/content`;
+            
+            const res = await fetch(url);
             const data = await res.json();
             setContent(data);
         } catch (err) {
@@ -44,7 +47,10 @@ export default function AdminPage() {
         const token = localStorage.getItem("gprsi_admin_token");
         
         try {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/admin/update`, {
+            const apiBase = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api').replace(/\/$/, '');
+            const url = apiBase.endsWith('/api') ? `${apiBase}/admin/update` : `${apiBase}/api/admin/update`;
+
+            const res = await fetch(url, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
