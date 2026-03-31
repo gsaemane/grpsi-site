@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import SectionHeading from '@/components/SectionHeading';
-import { Save, RefreshCw, Plus, Trash2, Edit3, Loader2, CheckCircle, AlertCircle, Globe, LayoutDashboard, Briefcase, FileText, Settings } from 'lucide-react';
+import { Save, RefreshCw, Plus, Trash2, Edit3, Loader2, CheckCircle, AlertCircle, Globe, LayoutDashboard, Briefcase, FileText, Settings, Upload, Image as ImageIcon } from 'lucide-react';
 
 export default function AdminPage() {
     const searchParams = useSearchParams();
@@ -79,6 +79,72 @@ export default function AdminPage() {
             current[path[path.length - 1]] = value;
             return newContent;
         });
+    };
+
+    // --- Image Uploader Sub-Component ---
+    const ImageUploader = ({ label, currentUrl, onUpload }: { label: string, currentUrl: string, onUpload: (url: string) => void }) => {
+        const [uploading, setUploading] = useState(false);
+
+        const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+
+            setUploading(true);
+            try {
+                const response = await fetch(`/api/upload?filename=${file.name}`, {
+                    method: 'POST',
+                    body: file,
+                });
+
+                if (response.ok) {
+                    const blob = await response.json();
+                    onUpload(blob.url);
+                } else {
+                    const err = await response.json();
+                    setError(`Upload failed: ${err.error || 'Server error'}`);
+                }
+            } catch (err) {
+                setError("Connectivity error during upload.");
+            } finally {
+                setUploading(false);
+            }
+        };
+
+        return (
+            <div className="space-y-3 p-6 bg-white rounded-2xl border border-slate-100 shadow-sm transition-all hover:border-blue-200">
+                <label className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">{label}</label>
+                <div className="flex items-center gap-6">
+                    <div className="w-24 h-16 bg-slate-50 rounded-xl border border-dashed border-slate-200 overflow-hidden flex items-center justify-center shrink-0">
+                        {currentUrl ? (
+                            <img src={currentUrl} alt="Preview" className="w-full h-full object-cover" />
+                        ) : (
+                            <Upload className="w-5 h-5 text-slate-300" />
+                        )}
+                    </div>
+                    <div className="flex-1 space-y-2">
+                        <div className="relative group">
+                            <input 
+                                type="file" 
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                                disabled={uploading}
+                            />
+                            <button className={`w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-slate-200 text-sm font-bold transition-all ${uploading ? 'bg-slate-50 text-slate-400' : 'bg-white text-slate-600 group-hover:border-blue-400 group-hover:text-blue-600'}`}>
+                                {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+                                {uploading ? 'Uploading...' : 'Select Maritime Asset'}
+                            </button>
+                        </div>
+                        <input 
+                            type="text" 
+                            className="w-full px-3 py-1.5 text-[10px] font-mono text-blue-500 bg-slate-50 rounded-md border-none outline-none overflow-hidden text-ellipsis"
+                            value={currentUrl}
+                            readOnly
+                        />
+                    </div>
+                </div>
+            </div>
+        );
     };
 
     if (loading) {
@@ -172,7 +238,7 @@ export default function AdminPage() {
                                     />
                                 </div>
                             </div>
-                            <div className="space-y-2">
+                            <div className="space-y-4">
                                 <label className="text-xs font-bold text-slate-400 uppercase tracking-widest">Subtitle / Description</label>
                                 <textarea 
                                     rows={3}
@@ -181,6 +247,13 @@ export default function AdminPage() {
                                     onChange={(e) => updateDeep(['home', 'hero', 'subtitle'], e.target.value)}
                                 />
                             </div>
+
+                            {/* Hero Background Image */}
+                            <ImageUploader 
+                                label="Hero Background Image" 
+                                currentUrl={content.home.hero.backgroundImage}
+                                onUpload={(url) => updateDeep(['home', 'hero', 'backgroundImage'], url)}
+                            />
                             
                             {/* Buttons Editor */}
                             <div className="grid grid-cols-2 gap-8">
@@ -407,6 +480,15 @@ export default function AdminPage() {
                                             }} />
                                     </div>
                                 </div>
+                                <ImageUploader 
+                                    label="Service Visualization" 
+                                    currentUrl={service.image}
+                                    onUpload={(url) => {
+                                        const next = [...content.services];
+                                        next[index] = { ...next[index], image: url };
+                                        setContent({ ...content, services: next });
+                                    }}
+                                />
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Description</label>
                                     <textarea rows={2} className="w-full px-6 py-4 rounded-xl border border-slate-200 text-slate-900 text-sm resize-none"
@@ -500,17 +582,15 @@ export default function AdminPage() {
                                             }}
                                         />
                                     </div>
-                                    <div className="space-y-1">
-                                        <label className="text-[10px] uppercase text-slate-400 font-bold ml-1">Display Asset URL</label>
-                                        <input 
-                                            className="w-full px-4 py-3 bg-white rounded-xl border border-slate-200 text-xs text-blue-500 font-mono"
-                                            value={project.image} onChange={(e) => {
-                                                const next = [...content.projects];
-                                                next[index] = { ...next[index], image: e.target.value };
-                                                setContent({ ...content, projects: next });
-                                            }}
-                                        />
-                                    </div>
+                                    <ImageUploader 
+                                        label="Project Showcase Image" 
+                                        currentUrl={project.image}
+                                        onUpload={(url) => {
+                                            const next = [...content.projects];
+                                            next[index] = { ...next[index], image: url };
+                                            setContent({ ...content, projects: next });
+                                        }}
+                                    />
                                 </div>
                             </div>
                         ))}

@@ -4,11 +4,17 @@
             "title": "GRP & ASSOCIATES LTD",
             "highlight": "ASSOCIATES",
             "subtitle": "Pioneering maritime logistics, engineering, and fuel distribution across the archipelago of the Solomon Islands.",
-            "backgroundImage": "/hero_maritime_solomon_islands_1774927638390.png",
+            "backgroundImage": "https://9svlp8qnok8yfw53.public.blob.vercel-storage.com/hero_maritime_solomon_islands_1774927638390.png",
             "establishedText": "Established 1994",
             "buttons": {
-                "primary": { "label": "Our Fleet", "link": "/services" },
-                "secondary": { "label": "Expertise", "link": "/about" }
+                "primary": {
+                    "label": "Our Fleet",
+                    "link": "/services"
+                },
+                "secondary": {
+                    "label": "Expertise",
+                    "link": "/about"
+                }
             }
         },
         "cta": {
@@ -35,9 +41,18 @@
         "email": "info@grpsi.com",
         "phone": "+677 24567",
         "social": [
-            { "platform": "Globe", "url": "#" },
-            { "platform": "Ship", "url": "#" },
-            { "platform": "Users", "url": "#" }
+            {
+                "platform": "Globe",
+                "url": "#"
+            },
+            {
+                "platform": "Ship",
+                "url": "#"
+            },
+            {
+                "platform": "Users",
+                "url": "#"
+            }
         ]
     },
     "services": [
@@ -53,7 +68,7 @@
                 "Regional emergency relief and rapid response coordination",
                 "Specialized handling for high-value and perishable oceanic assets"
             ],
-            "image": "/gprsi_landing_craft_logistics_mission_1774933381285.png"
+            "image": "https://9svlp8qnok8yfw53.public.blob.vercel-storage.com/gprsi_landing_craft_logistics_mission_1774933381285.png"
         },
         {
             "id": "fuel",
@@ -67,7 +82,7 @@
                 "Stabilized energy supply for regional power authority (SIEA) grids",
                 "Customized fueling solutions for large-scale mining and resource sites"
             ],
-            "image": "/gprsi_fuel_tanker_supply_remote_island_1774933362908.png"
+            "image": "https://9svlp8qnok8yfw53.public.blob.vercel-storage.com/gprsi_fuel_tanker_supply_remote_island_1774933362908.png"
         },
         {
             "id": "engineering",
@@ -81,7 +96,7 @@
                 "Project management for multi-year infrastructure developments",
                 "Maintenance and rehabilitation of coastal and seismic assets"
             ],
-            "image": "/gprsi_port_construction_site_malaita_1774933312596.png"
+            "image": "https://9svlp8qnok8yfw53.public.blob.vercel-storage.com/gprsi_port_construction_site_malaita_1774933312596.png"
         }
     ],
     "projects": [
@@ -90,7 +105,7 @@
             "location": "Gizo, Western Province",
             "year": "2024",
             "category": "Engineering",
-            "image": "/gprsi_port_construction_site_malaita_1774933312596.png",
+            "image": "https://9svlp8qnok8yfw53.public.blob.vercel-storage.com/gprsi_port_construction_site_malaita_1774933312596.png",
             "description": "A comprehensive multi-phase project focused on expanding docking capacity and reinforcing the main pier structure in Gizo to support larger cargo vessels."
         },
         {
@@ -98,7 +113,7 @@
             "location": "Santa Cruz & Reef Islands",
             "year": "2024",
             "category": "Logistics",
-            "image": "/gprsi_landing_craft_logistics_mission_1774933381285.png",
+            "image": "https://9svlp8qnok8yfw53.public.blob.vercel-storage.com/gprsi_landing_craft_logistics_mission_1774933381285.png",
             "description": "Establishing's GPRSI's flagship monthly supply loop, delivering essential machinery and fuel to the remote communities of the Santa Cruz archipelago."
         },
         {
@@ -106,7 +121,7 @@
             "location": "Auki, Malaita Province",
             "year": "2023",
             "category": "Fuel",
-            "image": "/gprsi_fuel_tanker_supply_remote_island_1774933362908.png",
+            "image": "https://9svlp8qnok8yfw53.public.blob.vercel-storage.com/gprsi_fuel_tanker_supply_remote_island_1774933362908.png",
             "description": "Construction and technical integration of a 500,000-liter fuel storage facility specifically designed to stabilize the power grid for the province's capital."
         },
         {
@@ -114,7 +129,7 @@
             "location": "Henderson East, Guadalcanal",
             "year": "2023",
             "category": "Engineering",
-            "image": "/gprsi_team_operations_image_1774928148738.png",
+            "image": "https://9svlp8qnok8yfw53.public.blob.vercel-storage.com/gprsi_team_operations_image_1774928148738.png",
             "description": "Civil works involving the rehabilitation of 15km of heavy-use road and the installation of flood-resistant drainage and bridge support systems."
         },
         {
@@ -122,7 +137,7 @@
             "location": "Central Guadalcanal",
             "year": "2022",
             "category": "Logistics",
-            "image": "/gprsi_projects_showcase_hero_1774928512898.png",
+            "image": "https://9svlp8qnok8yfw53.public.blob.vercel-storage.com/gprsi_projects_showcase_hero_1774928512898.png",
             "description": "A dedicated heavy-lift logistics mission involving the transit of industrial excavators and support vehicles to remote mountain resource sites."
         },
         {
@@ -130,7 +145,7 @@
             "location": "Shortland Islands",
             "year": "2024",
             "category": "Fuel",
-            "image": "/gprsi_landing_craft_logistics_mission_1774933381285.png",
+            "image": "https://9svlp8qnok8yfw53.public.blob.vercel-storage.com/gprsi_landing_craft_logistics_mission_1774933381285.png",
             "description": "Delivery and setup of portable, modular fuel pods to support the local fishing and transport industry in the westernmost islands of the Solomon Islands."
         }
     ]

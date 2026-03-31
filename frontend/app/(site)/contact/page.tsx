@@ -19,7 +19,7 @@ export default function ContactPage() {
     return (
         <>
             <Navbar />
-            <main className="pt-24">
+            <main className="pt-20 bg-grpsi-blue">
                 {/* Page Header */}
                 <section className="bg-grpsi-blue py-24 text-white relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-grpsi-gold/10 rounded-full blur-[150px] -mr-40" />

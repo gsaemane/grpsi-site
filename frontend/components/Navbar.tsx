@@ -26,8 +26,8 @@ export default function Navbar() {
 
   return (
     <nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled || pathname !== "/" ? "glass py-3 shadow-premium" : "bg-transparent py-5 text-white"
+      className={`fixed top-0 left-0 right-0 z-50 transform-gpu transition-all duration-500 ${
+        isScrolled || pathname !== "/" ? "glass py-4 shadow-premium" : "bg-transparent py-6 text-white"
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
