@@ -66,8 +66,10 @@ export default function AdminPage() {
                 const errData = await res.json();
                 setError(errData.error || "Update failed.");
             }
-        } catch (err) {
-            setError("Connectivity lost. Check your maritime link.");
+        } catch (err: any) {
+            console.error("Critical Maritime Link Failure:", err);
+            const detail = err.name === 'TypeError' ? " (Possible CORS/Network issue)" : "";
+            setError(`Connectivity lost. Check your maritime link${detail}.`);
         } finally {
             setIsSaving(false);
         }

@@ -59,7 +59,16 @@ const writeDB = async (data) => {
     }
 };
 
-app.use(cors());
+app.use(cors({
+    origin: true, // Allow all origins for the maritime API
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept']
+}));
+
+// Manual Preflight Handle for Vercel Serverless Bypass
+app.options('*', cors());
+
 app.use(express.json());
 
 // Middleware to Authenticate JWT
