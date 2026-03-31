@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+const jwt = require('jsonwebtoken');
 const { kv } = process.env.KV_URL ? require('@vercel/kv') : { kv: null };
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
