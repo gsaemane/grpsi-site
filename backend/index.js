@@ -58,8 +58,8 @@ const writeDB = (data) => {
 app.post('/api/auth/login', (req, res) => {
     const { password } = req.body;
     
-    // For production, this 'admin123' comparison should be against a real db hash
-    if (password === 'admin123') {
+    // For production, this should be against a real db hash
+    if (password === (process.env.ADMIN_PASSWORD || 'admin123')) {
         const token = jwt.sign({ user: 'admin' }, JWT_SECRET, { expiresIn: '1h' });
         return res.json({ token });
     }
