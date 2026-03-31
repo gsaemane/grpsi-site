@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-const jwt = require('jsonwebtoken');
+const { kv } = process.env.KV_URL ? require('@vercel/kv') : { kv: null };
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
@@ -11,8 +11,53 @@ const PORT = process.env.PORT || 5000;
 const DB_PATH = path.join(__dirname, 'data', 'db.json');
 const JWT_SECRET = process.env.JWT_SECRET || 'gprsi-maritime-secret-2024';
 
-// For demo: 'admin123' hashed
-const ADMIN_HASH = "$2a$10$mRz5r5Y5eFk5R5B5T5w5e.k5u5Z5S5v5l5O5m5o5n5I5s5l5a5n5d5s"; 
+const IS_CLOUD = !!process.env.KV_URL;
+
+// --- HYBRID DATA LAYER ---
+
+// Global Content Key for Vercel KV
+const MARITIME_DATA_KEY = 'gprsi_site_content';
+
+const readDB = async () => {
+    if (IS_CLOUD && kv) {
+        try {
+            const data = await kv.get(MARITIME_DATA_KEY);
+            return data || { about: {}, services: [], projects: [], home: {}, footer: {} };
+        } catch (err) {
+            console.error("Cloud Retrieval Error:", err);
+            // Fallback to minimal data if cloud fails
+            return { about: {}, services: [], projects: [], home: {}, footer: {} };
+        }
+    }
+
+    try {
+        const data = fs.readFileSync(DB_PATH, 'utf8');
+        return JSON.parse(data);
+    } catch (err) {
+        console.error("Error reading maritime database:", err);
+        return { about: {}, services: [], projects: [], home: {}, footer: {} };
+    }
+};
+
+const writeDB = async (data) => {
+    if (IS_CLOUD && kv) {
+        try {
+            await kv.set(MARITIME_DATA_KEY, data);
+            return true;
+        } catch (err) {
+            console.error("Cloud Sync Error:", err);
+            return false;
+        }
+    }
+
+    try {
+        fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 4), 'utf8');
+        return true;
+    } catch (err) {
+        console.error("Critical: Failed to sync maritime database to disk:", err);
+        return false;
+    }
+};
 
 app.use(cors());
 app.use(express.json());
@@ -31,27 +76,7 @@ const authenticateToken = (req, res, next) => {
     });
 };
 
-// Helper to read DB
-const readDB = () => {
-    try {
-        const data = fs.readFileSync(DB_PATH, 'utf8');
-        return JSON.parse(data);
-    } catch (err) {
-        console.error("Error reading database:", err);
-        return { about: {}, services: [], projects: [] };
-    }
-};
-
-// Helper to write DB
-const writeDB = (data) => {
-    try {
-        fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 4), 'utf8');
-        return true;
-    } catch (err) {
-        console.error("Error writing database:", err);
-        return false;
-    }
-};
+// --- END HYBRID LAYER ---
 
 // --- AUTH ROUTES ---
 
@@ -70,31 +95,31 @@ app.post('/api/auth/login', (req, res) => {
 // --- API ROUTES ---
 
 // Get All Content (Public)
-app.get('/api/content', (req, res) => {
-    const data = readDB();
+app.get('/api/content', async (req, res) => {
+    const data = await readDB();
     res.json(data);
 });
 
 // Specific Collection Routes (Backward Compatibility)
-app.get('/api/services', (req, res) => {
-    const data = readDB();
+app.get('/api/services', async (req, res) => {
+    const data = await readDB();
     res.json(data.services || []);
 });
 
-app.get('/api/projects', (req, res) => {
-    const data = readDB();
+app.get('/api/projects', async (req, res) => {
+    const data = await readDB();
     res.json(data.projects || []);
 });
 
-app.get('/api/about', (req, res) => {
-    const data = readDB();
+app.get('/api/about', async (req, res) => {
+    const data = await readDB();
     res.json(data.about || {});
 });
 
 // Admin Update Content (Protected)
-app.post('/api/admin/update', authenticateToken, (req, res) => {
+app.post('/api/admin/update', authenticateToken, async (req, res) => {
     const { collection, itemIndex, updatedItem, fullCollection } = req.body;
-    const db = readDB();
+    const db = await readDB();
 
     if (fullCollection && collection) {
         // Update entire collection (About object or Array)
@@ -110,7 +135,7 @@ app.post('/api/admin/update', authenticateToken, (req, res) => {
         return res.status(400).json({ error: "Invalid payload. Provide collection and either itemIndex+updatedItem or fullCollection." });
     }
 
-    if (writeDB(db)) {
+    if (await writeDB(db)) {
         res.json({ message: "Content updated successfully", db });
     } else {
         res.status(500).json({ error: "Failed to write to database." });
