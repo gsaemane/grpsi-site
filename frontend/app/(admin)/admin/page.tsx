@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import SectionHeading from '@/components/SectionHeading';
-import { Save, RefreshCw, Plus, Trash2, Edit3, Loader2, CheckCircle, AlertCircle, Globe, LayoutDashboard, Briefcase, FileText, Settings, Upload, Image as ImageIcon, Ship, Users } from 'lucide-react';
+import { Save, RefreshCw, Plus, Trash2, Edit3, Loader2, CheckCircle, AlertCircle, Globe, LayoutDashboard, Briefcase, FileText, Settings, Upload, Image as ImageIcon, Ship, Users, Link2, BookOpen, Target, Lightbulb, Trophy, ChevronDown, ChevronUp, LogOut } from 'lucide-react';
 
 export default function AdminPage() {
     const searchParams = useSearchParams();
@@ -62,6 +62,9 @@ export default function AdminPage() {
             if (res.ok) {
                 setSaveSuccess(true);
                 setTimeout(() => setSaveSuccess(false), 3000);
+            } else if (res.status === 403 || res.status === 401) {
+                setError("Security session expired. Please Log Out and Log In again to refresh your access.");
+                // Optionally: localStorage.removeItem("gprsi_admin_token");
             } else {
                 const errData = await res.json();
                 setError(errData.error || "Update failed.");
@@ -73,6 +76,11 @@ export default function AdminPage() {
         } finally {
             setIsSaving(false);
         }
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem("gprsi_admin_token");
+        window.location.href = "/admin"; // Simple reset
     };
 
     // Helper for robust deep updates
@@ -197,6 +205,13 @@ export default function AdminPage() {
                     >
                         <RefreshCw className="w-4 h-4" />
                         Sync
+                    </button>
+                    <button 
+                        onClick={handleLogout}
+                        className="flex items-center gap-2 px-6 py-3 bg-red-50 border border-red-100 rounded-xl text-red-600 font-bold text-sm hover:bg-red-100 transition-all font-sans"
+                    >
+                        <LogOut className="w-4 h-4" />
+                        Logout
                     </button>
                     {saveSuccess && (
                         <div className="flex items-center gap-2 px-6 py-3 bg-green-50 text-green-600 rounded-xl font-bold text-sm font-sans">
@@ -543,14 +558,26 @@ export default function AdminPage() {
                                     <img src={project.image} className="w-full h-full object-cover" alt="Fleet Project" />
                                 </div>
                                 <div className="flex-1 space-y-4">
-                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                    <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
                                         <div className="col-span-2 space-y-1">
                                             <label className="text-[10px] uppercase text-slate-400 font-bold ml-1">Project Name</label>
                                             <input 
-                                                className="w-full px-4 py-3 bg-white rounded-xl border border-slate-200 text-sm font-bold text-slate-900"
+                                                className="w-full px-4 py-3 bg-white rounded-xl border border-slate-200 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-grpsi-blue/20 outline-none transition-all"
                                                 value={project.title} onChange={(e) => {
                                                     const next = [...content.projects];
                                                     next[index] = { ...next[index], title: e.target.value };
+                                                    setContent({ ...content, projects: next });
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="space-y-1">
+                                            <label className="text-[10px] uppercase text-slate-400 font-bold ml-1 flex items-center gap-1"><Link2 className="w-2.5 h-2.5" /> URL Slug</label>
+                                            <input 
+                                                className="w-full px-4 py-3 bg-white rounded-xl border border-slate-200 text-sm font-mono text-slate-600 bg-slate-50/50"
+                                                placeholder="auk-port-2024"
+                                                value={project.slug || ''} onChange={(e) => {
+                                                    const next = [...content.projects];
+                                                    next[index] = { ...next[index], slug: e.target.value.toLowerCase().replace(/\s+/g, '-') };
                                                     setContent({ ...content, projects: next });
                                                 }}
                                             />
@@ -579,7 +606,7 @@ export default function AdminPage() {
                                         </div>
                                     </div>
                                     <div className="space-y-1">
-                                        <label className="text-[10px] uppercase text-slate-400 font-bold ml-1">Operational Summary</label>
+                                        <label className="text-[10px] uppercase text-slate-400 font-bold ml-1">Grid Operational Summary (Short)</label>
                                         <textarea 
                                             rows={2}
                                             className="w-full px-4 py-3 bg-white rounded-xl border border-slate-200 text-sm text-slate-900 resize-none font-sans"
@@ -589,6 +616,61 @@ export default function AdminPage() {
                                                 setContent({ ...content, projects: next });
                                             }}
                                         />
+                                    </div>
+
+                                    {/* Detailed Case Study Sections */}
+                                    <div className="p-6 bg-white rounded-2xl border border-slate-100 space-y-6 shadow-sm">
+                                        <h4 className="text-xs font-black uppercase tracking-[0.2em] text-grpsi-blue flex items-center gap-2 mb-2">
+                                            <BookOpen className="w-4 h-4 text-grpsi-gold" /> Technical Case Study Details
+                                        </h4>
+                                        
+                                        <div className="space-y-1">
+                                            <label className="text-[10px] uppercase text-slate-400 font-bold ml-1 flex items-center gap-2">
+                                                <Target className="w-3 h-3" /> The Challenge
+                                            </label>
+                                            <textarea 
+                                                rows={3}
+                                                placeholder="What were the maritime or logistical obstacles?"
+                                                className="w-full px-4 py-3 bg-slate-50/30 rounded-xl border border-slate-200 text-sm text-slate-800"
+                                                value={project.challenge || ''} onChange={(e) => {
+                                                    const next = [...content.projects];
+                                                    next[index] = { ...next[index], challenge: e.target.value };
+                                                    setContent({ ...content, projects: next });
+                                                }}
+                                            />
+                                        </div>
+
+                                        <div className="space-y-1">
+                                            <label className="text-[10px] uppercase text-slate-400 font-bold ml-1 flex items-center gap-2">
+                                                <Lightbulb className="w-3 h-3" /> Our Solution
+                                            </label>
+                                            <textarea 
+                                                rows={3}
+                                                placeholder="How did GPRSI overcome these through engineering or fleet logistics?"
+                                                className="w-full px-4 py-3 bg-slate-50/30 rounded-xl border border-slate-200 text-sm text-slate-800"
+                                                value={project.solution || ''} onChange={(e) => {
+                                                    const next = [...content.projects];
+                                                    next[index] = { ...next[index], solution: e.target.value };
+                                                    setContent({ ...content, projects: next });
+                                                }}
+                                            />
+                                        </div>
+
+                                        <div className="space-y-1">
+                                            <label className="text-[10px] uppercase text-slate-400 font-bold ml-1 flex items-center gap-2">
+                                                <Trophy className="w-3 h-3" /> The Final Result
+                                            </label>
+                                            <textarea 
+                                                rows={3}
+                                                placeholder="What was the lasting impact on the region?"
+                                                className="w-full px-4 py-3 bg-slate-50/30 rounded-xl border border-slate-200 text-sm text-slate-800"
+                                                value={project.result || ''} onChange={(e) => {
+                                                    const next = [...content.projects];
+                                                    next[index] = { ...next[index], result: e.target.value };
+                                                    setContent({ ...content, projects: next });
+                                                }}
+                                            />
+                                        </div>
                                     </div>
                                     <ImageUploader 
                                         label="Project Showcase Image" 

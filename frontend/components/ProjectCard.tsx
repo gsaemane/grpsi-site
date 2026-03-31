@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { ArrowUpRight, MapPin, Calendar } from "lucide-react";
+import Link from "next/link";
 
 interface ProjectCardProps {
     title: string;
@@ -10,9 +11,12 @@ interface ProjectCardProps {
     category: string;
     image: string;
     description: string;
+    slug?: string;
 }
 
-export default function ProjectCard({ title, location, year, category, image, description }: ProjectCardProps) {
+export default function ProjectCard({ title, location, year, category, image, description, slug }: ProjectCardProps) {
+    const projectSlug = slug || title.toLowerCase().replace(/\s+/g, '-');
+
     return (
         <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -39,27 +43,33 @@ export default function ProjectCard({ title, location, year, category, image, de
             {/* Content Section */}
             <div className="p-8 flex flex-col flex-grow">
                 <div className="flex justify-between items-start mb-4">
-                    <div>
+                    <div className="flex-1">
                         <h3 className="text-xl font-bold text-grpsi-blue mb-2 group-hover:text-grpsi-blue-light transition-colors leading-tight">
                             {title}
                         </h3>
-                        <div className="flex gap-4 text-sm text-slate-400 font-medium">
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-slate-400 font-medium">
                             <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> {location}</span>
                             <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> {year}</span>
                         </div>
                     </div>
-                    <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-grpsi-blue group-hover:bg-grpsi-gold group-hover:rotate-45 transition-all">
+                    <Link 
+                        href={`/projects/${projectSlug}`}
+                        className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-grpsi-blue group-hover:bg-grpsi-gold group-hover:rotate-45 transition-all shrink-0"
+                    >
                         <ArrowUpRight className="w-5 h-5" />
-                    </div>
+                    </Link>
                 </div>
-                <p className="text-slate-500 text-sm leading-relaxed mb-6">
+                <p className="text-slate-500 text-sm leading-relaxed mb-6 line-clamp-3">
                     {description}
                 </p>
                 <div className="mt-auto pt-4 border-t border-slate-50 flex items-center justify-between">
                     <span className="text-xs font-bold uppercase tracking-widest text-grpsi-blue/40">Status: Completed</span>
-                    <button className="text-grpsi-blue font-bold text-xs uppercase tracking-widest hover:text-grpsi-gold transition-colors">
+                    <Link 
+                        href={`/projects/${projectSlug}`}
+                        className="text-grpsi-blue font-bold text-xs uppercase tracking-widest hover:text-grpsi-gold transition-colors"
+                    >
                         View Case Study
-                    </button>
+                    </Link>
                 </div>
             </div>
         </motion.div>
