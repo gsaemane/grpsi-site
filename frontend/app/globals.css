@@ -2,21 +2,25 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #000a12; /* Deep Slate */
-  
+  --foreground: #000a12;
+  /* Deep Slate */
+
   /* GPRSI Modern Palette */
-  --grpsi-blue: #002B5B;      /* Deep Navy */
+  --grpsi-blue: #002B5B;
+  /* Deep Navy */
   --grpsi-blue-light: #1A5F7A;
-  --grpsi-gold: #FFD700;      /* Coral Gold */
+  --grpsi-gold: #FFD700;
+  /* Coral Gold */
   --grpsi-gold-muted: #E6C200;
-  --grpsi-slate: #334155;     /* Professional Gray */
+  --grpsi-slate: #334155;
+  /* Professional Gray */
   --grpsi-white: #F8FAFC;
 }
 
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  
+
   --color-grpsi-blue: var(--grpsi-blue);
   --color-grpsi-blue-light: var(--grpsi-blue-light);
   --color-grpsi-gold: var(--grpsi-gold);
@@ -35,7 +39,8 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #000c19; /* Darker navy */
+    --background: #000c19;
+    /* Darker navy */
     --foreground: #f1f5f9;
   }
 }
@@ -52,10 +57,16 @@ body {
   background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Very subtle */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  /* Very subtle */
 }
 
 .dark .glass {
   background: rgba(0, 12, 25, 0.75);
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+/* GPRSI Corporate Blue Logo Filter - Target: #002B5B from White PNG */
+.filter-grpsi-blue {
+  filter: invert(90%) sepia(95%) saturate(3062%) hue-rotate(205deg) brightness(92%) contrast(108%);
 }
